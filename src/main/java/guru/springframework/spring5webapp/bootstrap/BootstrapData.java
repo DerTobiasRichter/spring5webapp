@@ -25,8 +25,8 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Publisher bla = new Publisher("Super Books","Super Address", "Super City", "Super State","Super34345");
-        publisherRepository.save(bla);
+        Publisher superPub = new Publisher("Super Books", "Super Address", "Super City", "Super State", "Super34345");
+        publisherRepository.save(superPub);
 
 
         System.out.println("Started in Bootstrap");
@@ -34,23 +34,32 @@ public class BootstrapData implements CommandLineRunner {
 
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "12345");
+        ddd.setPublisher(superPub);
 
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
+        superPub.getBooks().add(ddd);
+
 
         authorRepository.save(eric);
         bookRepository.save(ddd);
+        publisherRepository.save(superPub);
 
         Author rod = new Author("Rod", "Johnson");
         Book noEJB = new Book("J2EE Development without EJB", "3939459459");
+        noEJB.setPublisher(superPub);
 
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
+        superPub.getBooks().add(noEJB);
 
         authorRepository.save(rod);
         bookRepository.save(noEJB);
+        publisherRepository.save(superPub);
 
         System.out.println("Number of Books: " + bookRepository.count());
         System.out.println("Number of Authors: " + authorRepository.count());
+        System.out.println("Publisher Number of Books: " + superPub.getBooks().size());
+        //publisherRepository.findAll().forEach(publisher -> System.out.println("Publisher Number of Books: " + publisher.getBooks().size()));
     }
 }

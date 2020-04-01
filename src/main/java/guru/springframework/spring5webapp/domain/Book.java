@@ -17,6 +17,9 @@ public class Book {
     private Set<Author> authors = new HashSet<>();
     private String isbn;
 
+    @ManyToOne
+    private Publisher publisher;
+
     public Book() {
     }
 
@@ -57,6 +60,14 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +90,7 @@ public class Book {
         sb.append(", title='").append(title).append('\'');
         sb.append(", authors=").append(authors);
         sb.append(", isbn='").append(isbn).append('\'');
+        sb.append(", publisher='").append(publisher).append('\'');
         sb.append('}');
         return sb.toString();
     }
